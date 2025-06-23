@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Akshay Devidas Dandge | IT & DevOps Portfolio</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <nav class="navbar">
@@ -16,12 +17,13 @@
       <li><a href="#linkedin-posts">Linkedin Posts</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <button id="theme-toggle" class="theme-switch">☀️</button>
   </nav>
   <header class="hero">
     <img src="akshay-profile.jpg" alt="Akshay Devidas Dandge" class="hero-img">
     <h1>Akshay Devidas Dandge</h1>
     <p>System Administrator | DevOps Support | Python & Cloud Enthusiast</p>
-    <a href="Akshay_Dandge_Resume.pdf" class="btn" download>📄 Download Resume</a>
+    <a href="Akshay_Dandge_Resume.pdf" class="btn" download><span class="icon">📄</span> Download Resume</a>
   </header>
 
   <section id="about" class="section">
@@ -141,12 +143,49 @@
   <section id="contact" class="section">
     <div class="container">
       <h2>Contact</h2>
-      <p>Email: <a href="mailto:akshay431112@gmail.com">akshay431112@gmail.com</a></p>
-      <p>Linkedin: <a href="https://www.linkedin.com/in/akshayd04" target="_blank">linkedin.com/in/akshayd04</a></p>
-      <p>Github: <a href="https://github.com/akshay431112" target="_blank">github.com/akshay431112</a></p>
+      <p><i class="fas fa-envelope"></i> Email: <a href="mailto:akshay431112@gmail.com">akshay431112@gmail.com</a></p>
+      <p><i class="fab fa-linkedin"></i> Linkedin: <a href="https://www.linkedin.com/in/akshayd04" target="_blank">linkedin.com/in/akshayd04</a></p>
+      <p><i class="fab fa-github"></i> Github: <a href="https://github.com/akshay431112" target="_blank">github.com/akshay431112</a></p>
     </div>
   </section>
 
   <footer><p>© Akshay Devidas Dandge</p></footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const heroImg = document.querySelector('.hero-img'); // Get the profile image
+
+    // Check for saved theme preference
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+      body.classList.add(currentTheme);
+      if (currentTheme === 'dark-mode') {
+        themeToggle.textContent = '🌙'; // Set moon icon if dark mode
+      } else {
+        themeToggle.textContent = '☀️'; // Set sun icon if light mode
+      }
+    } else {
+      // Default to light mode if no preference
+      body.classList.remove('dark-mode');
+      themeToggle.textContent = '☀️';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      if (body.classList.contains('dark-mode')) {
+        themeToggle.textContent = '🌙'; // Change to moon icon
+        localStorage.setItem('theme', 'dark-mode');
+      } else {
+        themeToggle.textContent = '☀️'; // Change to sun icon
+        localStorage.setItem('theme', 'light-mode');
+      }
+    });
+
+    // Profile image click effect
+    heroImg.addEventListener('click', () => {
+      heroImg.classList.toggle('clicked');
+    });
+  </script>
 </body>
 </html>
