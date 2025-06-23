@@ -1,22 +1,47 @@
-
 /* Reset and base */
+:root {
+  /* Light Mode Colors */
+  --primary-color: #0d47a1; /* Darker blue for main elements */
+  --secondary-color: #1976d2; /* Lighter blue for accents */
+  --accent-color: #f77f00; /* Muted orange for highlights/interactive elements */
+  --light-bg: #f8f9fa; /* Very light grey for light sections */
+  --dark-bg: #263238; /* Dark grey-blue for footer */
+  --text-color: #34495e; /* Soft dark grey for body text */
+  --card-bg: #ffffff; /* White for cards */
+  --shadow-color: rgba(0,0,0,0.1); /* Softer shadow */
+}
+
+body.dark-mode {
+  /* Dark Mode Colors */
+  --primary-color: #bbdefb; /* Lighter blue for primary elements */
+  --secondary-color: #90caf9; /* Medium blue */
+  --accent-color: #f77f00; /* Keep orange consistent */
+  --light-bg: #212529; /* Dark background for sections */
+  --dark-bg: #000000; /* Even darker for footer/navbar */
+  --text-color: #e0e0e0; /* Light grey for text */
+  --card-bg: #343a40; /* Dark grey for cards */
+  --shadow-color: rgba(255,255,255,0.08); /* Lighter shadow */
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #f5f6fa;
-  color: #2c3e50;
+  background: var(--light-bg);
+  color: var(--text-color);
   line-height: 1.6;
   scroll-behavior: smooth;
+  transition: background 0.4s ease, color 0.4s ease; /* Smooth transition for theme change */
 }
 
 /* Navbar */
 .navbar {
-  background: #ffffff;
+  background: var(--card-bg);
   position: sticky;
   top: 0;
   z-index: 1000;
   padding: 15px 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
 .navbar ul {
@@ -30,9 +55,10 @@ body {
 
 .navbar a {
   text-decoration: none;
-  color: #003049;
+  color: var(--primary-color);
   font-weight: 600;
   position: relative;
+  transition: color 0.4s ease;
 }
 
 .navbar a::after {
@@ -40,7 +66,7 @@ body {
   position: absolute;
   width: 0;
   height: 2px;
-  background: #f77f00;
+  background: var(--accent-color);
   left: 0;
   bottom: -4px;
   transition: 0.3s;
@@ -50,62 +76,115 @@ body {
   width: 100%;
 }
 
-/* Hero Section with Background */
+/* Theme Toggle Button */
+.theme-switch {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.8em; /* Larger icon */
+  cursor: pointer;
+  color: var(--primary-color); /* Use primary color for the icon */
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+.theme-switch:hover {
+  transform: translateY(-50%) scale(1.1);
+  color: var(--accent-color); /* Change color on hover */
+}
+
+/* Hero Section */
 .hero {
   background: url('cover-banner.jpg') no-repeat center center / cover;
   color: white;
   text-align: center;
   padding: 140px 20px 80px;
   position: relative;
+  display: flex; /* Use flexbox for better centering */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4); /* Slightly less opaque overlay */
 }
 .hero h1,
 .hero p,
 .hero .btn,
 .hero .hero-img {
   position: relative;
-  z-index: 1;
+  z-index: 2; /* Ensure content is above overlay */
 }
+.hero h1 {
+  font-size: 3.2em; /* Slightly larger for impact */
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* Add text shadow for readability */
+}
+.hero p {
+  font-size: 1.3em;
+  margin-top: 0;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Add text shadow for readability */
+}
+
 .hero-img {
-  width: 140px;
-  height: 140px;
+  width: 160px; /* Slightly larger profile image */
+  height: 160px;
   object-fit: cover;
   border-radius: 50%;
-  border: 4px solid #fcbf49;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  margin-bottom: 15px;
-  transition: transform 0.3s ease;
+  border: 5px solid var(--accent-color); /* Use accent color for border */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3); /* Stronger shadow for pop */
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer; /* Indicate it's clickable */
 }
 .hero-img:hover {
-  transform: scale(1.05);
+  transform: scale(1.08); /* More noticeable hover effect */
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
+/* New style for clicked profile image */
+.hero-img.clicked {
+  transform: scale(1.15); /* More pronounced zoom on click */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
 .btn {
-  display: inline-block;
-  padding: 12px 24px;
-  margin: 20px 10px;
-  background: #f77f00;
+  display: inline-flex; /* Use flex for icon alignment */
+  align-items: center;
+  gap: 8px; /* Space between text and icon */
+  padding: 14px 28px; /* Slightly larger button */
+  margin: 25px 10px 0; /* Adjust margin */
+  background: var(--accent-color);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px; /* Slightly more rounded */
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.3s ease;
+  font-size: 1.1em;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px var(--shadow-color);
 }
 .btn:hover {
-  background: #e76f00;
+  background: var(--primary-color); /* Change color on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px var(--shadow-color);
+}
+.btn .icon {
+    font-size: 1.2em; /* Adjust icon size if needed */
 }
 
 /* Sections */
 .section {
-  padding: 60px 20px;
+  padding: 80px 20px; /* Increased padding for more breathing room */
+  background: var(--light-bg);
+  color: var(--text-color); /* Ensure text color updates with theme */
+  transition: background 0.4s ease, color 0.4s ease;
 }
 .light {
-  background: #eef2f3;
+  background: var(--light-bg); /* Use the variable for light sections */
 }
 .container {
   max-width: 1100px;
@@ -114,29 +193,30 @@ body {
 
 /* Headings */
 h2 {
-  margin-bottom: 25px;
-  color: #003049;
-  font-size: 28px;
-  border-left: 6px solid #f77f00;
-  padding-left: 12px;
+  margin-bottom: 30px; /* More space below heading */
+  color: var(--primary-color);
+  font-size: 32px; /* Slightly larger heading */
+  border-left: 6px solid var(--accent-color); /* Use accent color */
+  padding-left: 15px; /* Slightly more padding */
+  transition: color 0.4s ease, border-color 0.4s ease;
 }
 
 /* Cards */
 .grid {
   display: grid;
-  gap: 25px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px; /* Increased gap */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly wider min width */
 }
 .card {
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--card-bg);
+  padding: 28px; /* Increased padding */
+  border-radius: 16px; /* More rounded corners */
+  box-shadow: 0 6px 18px var(--shadow-color); /* Softer, larger shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
 }
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  transform: translateY(-7px); /* More pronounced lift */
+  box-shadow: 0 10px 25px var(--shadow-color);
 }
 
 /* Skills */
@@ -148,42 +228,99 @@ h2 {
   gap: 15px;
 }
 .skills li {
-  background: #003049;
-  color: white;
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: background 0.3s ease;
+  background: var(--primary-color); /* Use primary color */
+  color: white; /* Default text color for light mode */
+  padding: 12px 20px; /* Slightly larger pills */
+  border-radius: 8px; /* More rounded */
+  font-size: 15px;
+  transition: background 0.3s ease, color 0.3s ease; /* Add color transition */
 }
 .skills li:hover {
-  background: #264653;
+  background: var(--secondary-color); /* Use secondary color on hover */
+}
+/* Dark mode specific styles for skills */
+body.dark-mode .skills li {
+  background: var(--card-bg); /* Use dark card background for skills in dark mode */
+  color: var(--text-color); /* Use light text color for skills in dark mode */
+}
+body.dark-mode .skills li:hover {
+  background: var(--secondary-color); /* Keep secondary color for hover */
 }
 
 /* LinkedIn Posts */
 .post {
-  background: #ffffff;
-  padding: 18px;
-  margin-bottom: 18px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  background: var(--card-bg);
+  padding: 20px; /* Slightly more padding */
+  margin-bottom: 15px;
+  border-radius: 12px; /* More rounded */
+  box-shadow: 0 3px 12px var(--shadow-color);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 .post a {
-  color: #003049;
+  color: var(--primary-color);
   font-weight: 500;
   text-decoration: none;
   display: block;
   transition: transform 0.2s ease, color 0.2s ease;
+  font-size: 1.1em; /* Slightly larger text */
 }
 .post a:hover {
-  transform: scale(1.02);
-  color: #f77f00;
+  transform: translateX(5px); /* Slide effect instead of scale */
+  color: var(--accent-color); /* Use accent color on hover */
 }
 
 /* Footer */
 footer {
   text-align: center;
-  padding: 25px;
-  background: #003049;
+  padding: 30px; /* More padding */
+  background: var(--dark-bg); /* Use dark background color */
   color: #fff;
-  font-size: 14px;
+  font-size: 15px;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 20px 60px;
+  }
+  .hero h1 {
+    font-size: 2.5em;
+  }
+  .hero p {
+    font-size: 1.1em;
+  }
+  h2 {
+    font-size: 26px;
+  }
+  .section {
+    padding: 60px 15px;
+  }
+  .theme-switch {
+    right: 15px;
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-img {
+    width: 120px;
+    height: 120px;
+  }
+  .hero h1 {
+    font-size: 2em;
+  }
+  .hero p {
+    font-size: 1em;
+  }
+  .btn {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+  .navbar ul {
+    gap: 15px;
+  }
+  h2 {
+    font-size: 24px;
+  }
 }
